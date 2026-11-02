@@ -369,7 +369,7 @@ document.getElementById('filters').innerHTML=
     html+=`<div class="row" data-sid="${s.sid}">
       <div class="cell info ${dc}"><div class="d">${s.m}/${String(s.d).padStart(2,'0')}</div><div class="w">${DOW[s.dow]} ${s.time}</div>${ev}</div>
       ${cells}
-      <div class="cell"><button class="copy-btn" onclick="copyCast('${s.sid}')" title="복사">🔑</button></div>
+      <div class="cell"><button class="copy-btn" onclick="copyCast('${s.sid}')" title="복사">🧶</button></div>
       <div class="seat-line">
         <div class="seat-tags" id="tags-${s.sid}"></div>
         <div class="seat-input-row"><input class="seat-input" id="inp-${s.sid}" inputmode="text" enterkeyhint="done" autocomplete="off" autocapitalize="characters" placeholder="좌석 1F-B-3-7"><button class="seat-ok-btn" onclick="confirmSeat('${s.sid}')">✓</button></div>
@@ -591,11 +591,11 @@ document.querySelectorAll('.seat-input').forEach(inp=>{
 
 /* ---------- copy ---------- */
 function copyText(text,btn){
-  const ok=()=>{if(btn){btn.textContent='✅';setTimeout(()=>btn.textContent='🔑',1500);}};
+  const ok=()=>{if(btn){btn.textContent='✅';setTimeout(()=>btn.textContent='🧶',1500);}};
   const fallback=()=>{try{const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');
     ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px;';document.body.appendChild(ta);
     ta.focus();ta.select();ta.setSelectionRange(0,text.length);const r=document.execCommand('copy');document.body.removeChild(ta);if(r){ok();return true;}}catch(e){}return false;};
-  const fail=()=>{if(!fallback()){if(btn){btn.textContent='⚠️';setTimeout(()=>btn.textContent='🔑',1500);}prompt('복사가 자동으로 안 돼요. 아래 텍스트를 직접 복사해주세요:',text);}};
+  const fail=()=>{if(!fallback()){if(btn){btn.textContent='⚠️';setTimeout(()=>btn.textContent='🧶',1500);}prompt('복사가 자동으로 안 돼요. 아래 텍스트를 직접 복사해주세요:',text);}};
   if(navigator.clipboard&&navigator.clipboard.writeText&&window.isSecureContext)navigator.clipboard.writeText(text).then(ok).catch(fail);
   else fail();
 }
