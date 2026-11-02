@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아가사 출연 일정 - 전체 배우</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wine:#7a1f21;--wine-d:#4d1013;--wine-dd:#36090c;
+  --gold:#ecd29c;--gold-m:#d4b072;--gold-d:#a8854c;
+  --cream:#f8f0de;--paper:#fffaf1;--ink:#2b1712;
+  --red:#b0242b;--blue:#1f63b8;--green:#2b8a3e;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);min-height:100vh;padding:12px 8px 40px;
+  background-color:var(--wine);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 120% 70% at 50% 18%,#962f2b 0%,#701b1e 55%,#4a1013 100%);
+  background-size:240px 240px,100% 100%;}
+
+/* ---------- page frame (poster border) ---------- */
+.page{max-width:760px;margin:0 auto;position:relative;padding:18px 8px 26px;
+  border:1px solid rgba(236,210,156,0.55);}
+.page::before{content:'';position:absolute;inset:5px;border:2px dotted rgba(236,210,156,0.55);pointer-events:none;}
+.corner{position:absolute;color:var(--gold-m);font-size:13px;line-height:1;}
+.corner.tl{top:-7px;left:-6px;}.corner.tr{top:-7px;right:-6px;}
+.corner.bl{bottom:-7px;left:-6px;}.corner.br{bottom:-7px;right:-6px;}
+
+/* ---------- HERO ---------- */
+.hero{text-align:center;padding:6px 8px 4px;}
+.agatha-en{font-family:'Cinzel',serif;font-weight:900;font-size:50px;letter-spacing:3px;line-height:1;
+  display:inline-block;transform:scaleY(1.45);margin:20px 0 22px;
+  background:linear-gradient(180deg,#f6e3b6 0%,#ddb978 60%,#c79f5e 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 2px 0 rgba(0,0,0,0.0);}
+.plate{position:relative;max-width:330px;margin:0 auto;padding:22px 16px 18px;
+  border:1.5px solid var(--gold-m);border-radius:150px 150px 16px 16px;background:rgba(0,0,0,0.13);}
+.plate::before{content:'';position:absolute;inset:5px;border:1px solid rgba(236,210,156,0.4);
+  border-radius:145px 145px 12px 12px;pointer-events:none;}
+.keyhole{width:112px;display:block;margin:0 auto 10px;}
+.musical{font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:12px;letter-spacing:3px;color:var(--gold);}
+.agatha-kr{font-family:'Gowun Batang',serif;font-weight:700;font-size:44px;letter-spacing:6px;color:var(--gold);
+  display:inline-block;transform:scaleY(1.3);margin:10px 0 12px;}
+.venue{font-weight:700;font-size:13px;color:var(--gold);letter-spacing:0.5px;}
+.dates{font-family:'Cinzel',serif;font-weight:700;font-size:17px;color:var(--gold);margin-top:6px;letter-spacing:1px;}
+.grand{font-family:'Cinzel',serif;font-weight:500;font-size:10px;color:var(--gold-m);letter-spacing:3px;margin-top:2px;}
+.ticket-row,.info-row{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:14px;}
+.info-row{margin-top:8px;}
+.ticket-btn,.info-btn{display:inline-block;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;
+  text-decoration:none;color:var(--gold);border:1px solid var(--gold-m);background:rgba(0,0,0,0.2);}
+.info-btn{font-weight:500;font-size:10.5px;border-color:rgba(236,210,156,0.45);}
+
+/* ---------- section label (poster plate) ---------- */
+.label-plate{display:table;margin:26px auto 14px;padding:7px 22px;border-radius:8px;
+  font-family:'Cinzel',serif;font-weight:700;font-size:16px;letter-spacing:1.5px;color:var(--ink);
+  background:linear-gradient(180deg,#f5e3ba,#d9b97c);
+  box-shadow:0 0 0 2px var(--wine-d),0 0 0 3px var(--gold-m),0 4px 12px rgba(0,0,0,0.35);}
+.label-plate small{display:block;text-align:center;font-family:'Noto Sans KR',sans-serif;font-size:9px;
+  letter-spacing:3px;font-weight:700;color:var(--red);margin-top:1px;}
+
+/* ---------- pin + filters ---------- */
+.pin-bar{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;min-height:26px;margin-bottom:8px;}
+.pin-hint{font-size:11px;color:var(--gold-m);}
+.pin-status{font-size:11px;font-weight:700;color:var(--gold);display:flex;align-items:center;gap:5px;}
+.pin-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block;animation:pblink 1.4s infinite;}
+@keyframes pblink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.pin-btn{padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;border:1.5px solid var(--gold-m);}
+.pin-btn-set{background:linear-gradient(180deg,#f5e3ba,#d9b97c);color:var(--wine-d);}
+.pin-btn-clear{background:rgba(0,0,0,0.2);color:var(--gold);}
+
+.filter-card{background:rgba(255,250,241,0.96);border-radius:10px;padding:10px 10px 6px;
+  box-shadow:0 0 0 1px var(--gold-d),0 6px 16px rgba(0,0,0,0.3);}
+.fgroup{display:grid;grid-template-columns:50px 1fr;align-items:center;gap:6px;margin-bottom:6px;}
+.fgroup.all{display:flex;justify-content:center;margin-bottom:8px;}
+.fgl{font-size:10.5px;font-weight:700;color:var(--red);text-align:right;letter-spacing:-0.3px;}
+.frow{display:flex;gap:4px;flex-wrap:wrap;}
+.fb2{padding:4px 10px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;
+  background:var(--bg);color:var(--fg);border:1.5px solid var(--line);transition:all 0.12s;}
+.fb2.active{background:var(--act);color:#fff;border-color:var(--act);}
+.fb2.pinned{outline:2.5px solid var(--red);outline-offset:1px;}
+.btn-all{--bg:#fff;--fg:var(--ink);--line:#cdb38a;--act:var(--red);}
+.count-info{text-align:center;font-size:12px;color:var(--gold);margin:12px 0 10px;font-weight:500;}
+
+/* ---------- table ---------- */
+.table-wrap{background:var(--paper);border-radius:6px;overflow:hidden;
+  box-shadow:0 0 0 1px var(--gold-d),0 6px 18px rgba(0,0,0,0.35);}
+.row{display:grid;grid-template-columns:40px repeat(9,minmax(0,1fr)) 18px;gap:1px;padding:5px 3px 4px;
+  border-top:1px solid #ecdcc6;align-items:center;}
+.row.hidden{display:none;}
+.row.header-row{background:#f9e2dc;border-top:none;padding:6px 3px;}
+.row.header-row .cell{color:var(--red);font-weight:700;font-size:8px;word-break:break-all;line-height:1.2;}
+.cell{text-align:center;font-size:9px;min-width:0;}
+.cell.info{text-align:left;line-height:1.25;}
+.cell.info .d{font-weight:700;font-size:10px;}
+.cell.info .w{font-size:8px;color:#6b5a4c;font-weight:500;}
+.cell.info.sat .d,.cell.info.sat .w{color:var(--blue);}
+.cell.info.sun .d,.cell.info.sun .w{color:var(--red);}
+.cell.info.mat .d,.cell.info.mat .w{color:var(--green);}
+.event-tag{display:block;font-size:7px;font-weight:700;color:var(--red);margin-top:1px;white-space:nowrap;text-decoration:none;}
+.pill{display:inline-block;font-size:8px;font-weight:700;padding:1px 2px;border-radius:4px;letter-spacing:-0.5px;
+  white-space:nowrap;max-width:100%;overflow:hidden;line-height:1.4;}
+.fb{display:block;width:fit-content;margin:1px auto 0;font-size:6px;font-weight:700;background:var(--red);color:#fff;
+  padding:0 3px;border-radius:5px;line-height:1.4;}
+.fb.fb-last{background:#555;}
+.copy-btn{background:none;border:none;cursor:pointer;font-size:12px;padding:0;width:100%;}
+.seat-line{grid-column:1/-1;display:flex;justify-content:flex-end;align-items:center;gap:4px;padding-top:3px;}
+.seat-input-row{display:flex;gap:2px;}
+.seat-input{width:96px;font-size:9px;padding:2px 4px;border:1px solid #d8c3a0;border-radius:5px;background:#fff;
+  color:var(--ink);font-family:inherit;text-align:center;}
+.seat-input:focus{outline:none;border-color:var(--red);}
+.seat-ok-btn{background:var(--wine);color:var(--gold);border:none;border-radius:5px;font-size:9px;font-weight:700;padding:2px 6px;cursor:pointer;}
+.seat-tags{display:flex;flex-wrap:wrap;gap:2px;justify-content:flex-end;}
+.seat-tag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:6px;cursor:pointer;color:#fff;}
+.no-show{padding:5px 8px;background:#f6ecdc;font-size:10px;color:#8a7360;text-align:center;border-top:1px solid #ecdcc6;font-style:italic;}
+.notice{text-align:center;font-size:10px;color:var(--gold-m);margin-top:10px;line-height:1.6;padding:0 8px;}
+
+/* ---------- counting / capture ---------- */
+#captureArea{margin-top:22px;padding:18px 8px 20px;border-radius:8px;
+  background:radial-gradient(ellipse 120% 70% at 50% 15%,#8e2a27 0%,#6e1a1d 60%,#4d1013 100%);
+  box-shadow:0 0 0 1px var(--gold-d);}
+.settle-title{text-align:center;font-family:'Gowun Batang',serif;font-weight:700;font-size:17px;color:var(--gold);letter-spacing:2px;margin-bottom:2px;}
+.settle-sub{text-align:center;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold-m);margin-bottom:8px;}
+.cgl{font-size:10.5px;font-weight:700;color:var(--gold);text-align:center;letter-spacing:2px;margin:8px 0 4px;}
+.counting-box{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:360px;margin:0 auto;}
+.counting-box.two{grid-template-columns:repeat(2,1fr);max-width:240px;}
+.count-card{background:var(--cream);border-radius:8px;padding:6px 3px;text-align:center;border:1px solid var(--gold-m);transition:opacity .15s,filter .15s;}
+.count-card.dim{opacity:0.35;filter:grayscale(70%);}
+.cnt-name{font-size:11px;font-weight:700;margin-bottom:2px;}
+.cnt-num{font-size:19px;font-weight:700;line-height:1;}
+.cnt-of{font-size:0.55em;font-weight:500;color:#9a8a78;margin-left:1px;}
+.cnt-label{font-size:8px;color:#8a7360;}
+.cnt-total-box{display:flex;justify-content:center;margin:12px 0 4px;}
+.cnt-total-card{background:linear-gradient(180deg,#f5e3ba,#d9b97c);border-radius:12px;padding:7px 28px;text-align:center;
+  box-shadow:0 0 0 2px var(--wine-d),0 0 0 3px var(--gold-m);}
+.cnt-total-card .cnt-name{color:var(--wine-d);}
+.cnt-total-card .cnt-num{font-size:28px;color:var(--wine-d);}
+
+.seat-map-section{margin:14px -4px 0;background:var(--cream);border-radius:10px;padding:14px 2px 16px;border:1px solid var(--gold-m);}
+.seat-map-title{text-align:center;font-size:13px;font-weight:700;color:var(--red);margin-bottom:8px;letter-spacing:1px;}
+.floor-block{margin-bottom:22px;}.floor-block:last-child{margin-bottom:0;}
+.floor-title{text-align:center;font-size:12px;font-weight:700;color:var(--wine-d);background:#f0dcc0;border-radius:8px;padding:4px 0;margin:0 6px 8px;letter-spacing:2px;}
+.stage-box-mini{background:var(--wine-d);color:var(--gold);border-radius:6px;text-align:center;font-family:'Cinzel',serif;
+  font-size:10px;font-weight:700;padding:4px 0;letter-spacing:4px;margin:0 6px 10px;}
+.zone-scroll{overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
+.seat-grid{display:flex;flex-direction:column;gap:1px;align-items:center;width:max-content;margin:0 auto;}
+.zone-cells{display:flex;gap:1px;flex-shrink:0;}
+.seat-wc{display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:2px;background:#e3d8c4;color:#8a7360;}
+.zone-label{font-size:10px;font-weight:700;color:#7a6450;text-align:center;margin-bottom:3px;letter-spacing:1px;white-space:nowrap;flex-shrink:0;}
+.seat-row{display:flex;align-items:center;gap:1px;}
+.row-label{font-weight:700;color:#9a8670;flex-shrink:0;text-align:center;}
+.seat-gap{flex-shrink:0;}
+.seat{border-radius:2px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:#efe4cf;color:#b8a688;border:1px solid #dccbab;}
+.seat.mk1{background:#b0242b!important;color:#fff!important;border-color:#7d171d!important;}
+.seat.mk2{background:#3a72c2!important;color:#fff!important;border-color:#204d8f!important;}
+.seat.mk3{background:#d98a2e!important;color:#fff!important;border-color:#a4671c!important;}
+.seat.mk4{background:#7a4ec2!important;color:#fff!important;border-color:#54338f!important;}
+.seat.mk5{background:#3ea15f!important;color:#fff!important;border-color:#25703f!important;}
+.seat-legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px;font-size:11px;}
+.seat-legend-item{display:flex;align-items:center;gap:4px;}
+.seat-legend-dot{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+.btn-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px;}
+.ghost-btn{padding:6px 16px;background:rgba(0,0,0,0.2);border:1px solid var(--gold-m);border-radius:20px;font-size:11px;font-weight:700;
+  color:var(--gold);text-decoration:none;cursor:pointer;font-family:inherit;white-space:nowrap;}
+.ghost-btn:disabled{opacity:0.6;cursor:default;}
+
+@media(min-width:768px){
+  .agatha-en{font-size:72px;}
+  .agatha-kr{font-size:58px;}
+  .plate{max-width:400px;}
+  .keyhole{width:140px;}
+  .fb2{font-size:12px;padding:5px 13px;}
+  .fgroup{grid-template-columns:66px 1fr;}
+  .fgl{font-size:12px;}
+  .row{grid-template-columns:64px repeat(9,minmax(0,1fr)) 26px;gap:3px;padding:7px 8px 6px;}
+  .row.header-row .cell{font-size:11px;word-break:keep-all;}
+  .cell.info .d{font-size:12.5px;}.cell.info .w{font-size:10px;}
+  .pill{font-size:11px;padding:2px 5px;letter-spacing:0;}
+  .fb{font-size:8px;}
+  .event-tag{font-size:9px;}
+  .copy-btn{font-size:14px;}
+  .seat-input{width:120px;font-size:10.5px;}
+  .cnt-num{font-size:24px;}
+  .cnt-total-card .cnt-num{font-size:34px;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <span class="corner tl">✦</span><span class="corner tr">✦</span><span class="corner bl">✦</span><span class="corner br">✦</span>
+
+  <header class="hero">
+    <div class="agatha-en">AGATHA</div>
+    <div class="plate">
+      <svg class="keyhole" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60 8 A46 46 0 0 1 82 94 L100 192 H20 L38 94 A46 46 0 0 1 60 8 Z" fill="#2e1412" stroke="#d4b072" stroke-width="2.5"/>
+        <g font-family="Gowun Batang, serif" fill="#ecd29c" text-anchor="middle">
+          <text x="60" y="38" font-size="8.5">1926년 12월</text>
+          <text x="60" y="53" font-size="8.5">아가사 크리스티</text>
+          <text x="60" y="68" font-size="9.5" font-weight="700">실종</text>
+          <text x="60" y="140" font-size="8.5">기록되지 않은</text>
+          <text x="60" y="156" font-size="9.5" font-weight="700">열하루</text>
+        </g>
+      </svg>
+      <div class="musical">MUSICAL</div>
+      <div class="agatha-kr">아가사</div>
+      <div class="venue">NOL 서경스퀘어 스콘 1관</div>
+      <div class="dates">2026.12.09 – 12.20</div>
+      <div class="grand">GRAND OPEN</div>
+    </div>
+    <div class="ticket-row" id="ticketRow"></div>
+    <div class="info-row">
+      <a href="#captureArea" class="info-btn">🪑 좌석 배치도</a>
+      <a href="https://www.musicalseeya.com/" target="_blank" class="info-btn">🔍 시야 확인</a>
+    </div>
+  </header>
+
+  <div class="label-plate">★ CASTING SCHEDULE ★<small>출연 일정</small></div>
+
+  <div class="pin-bar" id="pinBar"></div>
+  <div class="filter-card" id="filters"></div>
+  <div class="count-info" id="countInfo"></div>
+
+  <div class="table-wrap" id="tableWrap"></div>
+  <div class="notice">※ 상기 공연 스케줄은 배우 및 제작사의 사정에 의해 사전 공지 없이 변경될 수 있습니다.</div>
+
+  <div id="captureArea">
+    <div class="settle-title">2026년 아가사 정산</div>
+    <div class="settle-sub">MY AGATHA ARCHIVE</div>
+    <div id="countingSection"></div>
+    <div class="cnt-total-box">
+      <div class="cnt-total-card">
+        <div class="cnt-name">합계</div>
+        <div class="cnt-num"><span id="cnt-total">0</span><span id="tot-total" class="cnt-of">/0</span></div>
+        <div class="cnt-label">회</div>
+      </div>
+    </div>
+    <div class="seat-map-section">
+      <div class="seat-map-title">내 좌석 정산</div>
+      <div id="seatMapInner"></div>
+      <div class="seat-legend" id="seatLegend"></div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="ghost-btn" onclick="exportData()">💾 내 데이터 저장</button>
+    <label class="ghost-btn">📂 데이터 불러오기<input type="file" accept=".json" onchange="importData(event)" style="display:none;"></label>
+  </div>
+  <div class="btn-row" style="margin-top:6px;">
+    <a href="https://chichiandpopo.github.io/stage_archive/" target="_blank" class="ghost-btn">🎭 관극 아카이브</a>
+    <button id="saveImgBtn" class="ghost-btn" onclick="saveArchiveImage()">📸 정산판 저장</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+/* =====================================================================
+   DATA — 여기만 고치면 사이트 전체가 갱신돼요
+   ===================================================================== */
+const TICKET_LINKS=[
+  {label:'🎟 NOL티켓', url:'https://tickets.interpark.com/search?keyword=%EC%95%84%EA%B0%80%EC%82%AC'}, // TODO: 상품 페이지 URL로 교체
+  {label:'🎟 예스24',  url:'https://ticket.yes24.com/'}                                                   // TODO: 상품 페이지 URL로 교체
+];
+
+const ROLES=[
+  {key:'agatha',    label:'아가사',   actors:['이정화','백은혜','최수진']},
+  {key:'roy',       label:'로이',     actors:['김재범','고상호','원태민']},
+  {key:'raymond',   label:'레이몬드', actors:['홍나현','정지우','홍기범']},
+  {key:'archibald', label:'아치볼드', actors:['정평','김대식']},
+  {key:'paul',      label:'폴',       actors:['안두호','박상준']},
+  {key:'newman',    label:'뉴먼',     actors:['무현','최반석']},
+  {key:'beth',      label:'베스',     actors:['한세라','하미미']},
+  {key:'nancy',     label:'낸시',     actors:['김초하','정다예']},
+  {key:'harris',    label:'헤리츠',   actors:['강인대','이찬렬']},
+];
+
+// [MMDD, HHMM, [아가사, 로이, 레이몬드, 아치볼드, 폴, 뉴먼, 베스, 낸시, 헤리츠]]
+const SHOWS=[
+  ['1209','1930',['이정화','김재범','홍나현','정평','안두호','무현','한세라','김초하','강인대']],
+  ['1210','1930',['백은혜','고상호','정지우','김대식','박상준','최반석','하미미','정다예','이찬렬']],
+  ['1211','1930',['최수진','원태민','홍나현','김대식','박상준','최반석','한세라','정다예','강인대']],
+  ['1212','1400',['백은혜','고상호','정지우','정평','안두호','무현','하미미','김초하','이찬렬']],
+  ['1212','1830',['백은혜','원태민','정지우','정평','안두호','무현','하미미','김초하','이찬렬']],
+  ['1213','1400',['최수진','고상호','홍나현','김대식','박상준','최반석','한세라','김초하','강인대']],
+  ['1213','1830',['이정화','원태민','홍나현','김대식','박상준','최반석','한세라','김초하','강인대']],
+  ['1215','1930',['이정화','고상호','정지우','김대식','안두호','최반석','한세라','정다예','강인대']],
+  ['1216','1930',['백은혜','원태민','정지우','정평','박상준','무현','하미미','김초하','이찬렬']],
+  ['1217','1500',['최수진','고상호','홍나현','정평','안두호','최반석','한세라','정다예','강인대']],
+  ['1217','1930',['이정화','고상호','홍나현','정평','안두호','최반석','한세라','정다예','강인대']],
+  ['1218','1930',['백은혜','원태민','홍기범','김대식','박상준','무현','하미미','김초하','이찬렬']],
+  ['1219','1400',['최수진','원태민','정지우','김대식','박상준','최반석','하미미','김초하','강인대']],
+  ['1219','1830',['최수진','고상호','정지우','김대식','박상준','최반석','하미미','김초하','강인대']],
+  ['1220','1400',['백은혜','고상호','홍나현','정평','안두호','무현','한세라','정다예','이찬렬']],
+  ['1220','1830',['이정화','원태민','홍기범','정평','안두호','무현','한세라','정다예','이찬렬']],
+];
+
+// 이벤트 태그 (예시: '1209-1930':[{label:'첫공무대인사',url:'https://x.com/...'}])
+const EVENTS={};
+
+// 막공이 확정되면 true로 바꾸면 각 배우의 마지막 회차에 '막' 배지가 붙어요
+const SHOW_LAST_BADGE=false;
+
+const YEAR=2026;
+const SEAT_KEY='agatha_seats_v1', PIN_KEY='agatha_pin_v1';
+
+/* ===================================================================== */
+const DOW=['일','월','화','수','목','금','토'];
+const ak=(role,actor)=>role+':'+actor;
+
+const ACTOR_STYLE={};
+(function(){
+  const total=ROLES.reduce((s,r)=>s+r.actors.length,0); let i=0;
+  ROLES.forEach(r=>r.actors.forEach(a=>{
+    const h=Math.round(i*360/total+6)%360;
+    ACTOR_STYLE[ak(r.key,a)]={bg:`hsl(${h},38%,89%)`,fg:`hsl(${h},52%,26%)`,act:`hsl(${h},45%,36%)`,line:`hsl(${h},35%,72%)`};
+    i++;
+  }));
+})();
+
+const SHOW_LIST=SHOWS.map(s=>{
+  const m=+s[0].slice(0,2), d=+s[0].slice(2);
+  const sid=s[0]+'-'+s[1];
+  return {sid,m,d,dow:new Date(YEAR,m-1,d).getDay(),time:s[1].slice(0,2)+':'+s[1].slice(2),cast:s[2],ev:EVENTS[sid]||[]};
+});
+const SHOW_INFO={};
+SHOW_LIST.forEach(s=>{const o={};ROLES.forEach((r,i)=>o[r.key]=s.cast[i]);SHOW_INFO[s.sid]=o;});
+
+/* first / last badges */
+const FIRST={},LAST={};
+SHOW_LIST.forEach(s=>ROLES.forEach((r,i)=>{const k=ak(r.key,s.cast[i]);if(!(k in FIRST))FIRST[k]=s.sid;LAST[k]=s.sid;}));
+
+/* ---------- render: tickets ---------- */
+document.getElementById('ticketRow').innerHTML=TICKET_LINKS.map(t=>`<a class="ticket-btn" href="${t.url}" target="_blank" rel="noopener">${t.label}</a>`).join('');
+
+/* ---------- render: filters ---------- */
+document.getElementById('filters').innerHTML=
+  `<div class="fgroup all"><button class="fb2 btn-all active" onclick="resetFilter()">전체 보기</button></div>`+
+  ROLES.map(r=>`<div class="fgroup"><div class="fgl">${r.label}</div><div class="frow">${
+    r.actors.map(a=>{const st=ACTOR_STYLE[ak(r.key,a)];
+      return `<button class="fb2" data-role="${r.key}" data-actor="${a}" style="--bg:${st.bg};--fg:${st.fg};--act:${st.act};--line:${st.line}" onclick="toggleFilter('${r.key}','${a}')">${a}</button>`;}).join('')
+  }</div></div>`).join('');
+
+/* ---------- render: table ---------- */
+(function(){
+  let html=`<div class="row header-row"><div class="cell info">일정</div>${ROLES.map(r=>`<div class="cell">${r.label}</div>`).join('')}<div class="cell"></div></div>`;
+  let prev=null;
+  SHOW_LIST.forEach(s=>{
+    const cur=new Date(YEAR,s.m-1,s.d);
+    if(prev){
+      const g=new Date(prev); g.setDate(g.getDate()+1);
+      while(g<cur){
+        html+=`<div class="no-show" data-noshow="1">${g.getMonth()+1}월 ${g.getDate()}일 (${DOW[g.getDay()]}) — 공연 없음</div>`;
+        g.setDate(g.getDate()+1);
+      }
+    }
+    prev=cur;
+    const isMat=s.dow>=1&&s.dow<=5&&parseInt(s.time)<18;
+    const dc=s.dow===6?'sat':s.dow===0?'sun':isMat?'mat':'';
+    const ev=s.ev.map(e=>`<a class="event-tag" href="${e.url||'#'}" target="_blank" rel="noopener">${e.label}</a>`).join('');
+    const cells=ROLES.map((r,i)=>{
+      const a=s.cast[i], k=ak(r.key,a), st=ACTOR_STYLE[k];
+      let b='';
+      if(FIRST[k]===s.sid) b='<span class="fb">첫</span>';
+      else if(SHOW_LAST_BADGE&&LAST[k]===s.sid) b='<span class="fb fb-last">막</span>';
+      return `<div class="cell"><span class="pill" style="background:${st.bg};color:${st.fg}">${a}</span>${b}</div>`;
+    }).join('');
+    html+=`<div class="row" data-sid="${s.sid}">
+      <div class="cell info ${dc}"><div class="d">${s.m}/${String(s.d).padStart(2,'0')}</div><div class="w">${DOW[s.dow]} ${s.time}</div>${ev}</div>
+      ${cells}
+      <div class="cell"><button class="copy-btn" onclick="copyCast('${s.sid}')" title="복사">🔑</button></div>
+      <div class="seat-line">
+        <div class="seat-tags" id="tags-${s.sid}"></div>
+        <div class="seat-input-row"><input class="seat-input" id="inp-${s.sid}" inputmode="text" enterkeyhint="done" autocomplete="off" autocapitalize="characters" placeholder="좌석 1F-B-3-7"><button class="seat-ok-btn" onclick="confirmSeat('${s.sid}')">✓</button></div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('tableWrap').innerHTML=html;
+})();
+
+/* ---------- render: counting cards ---------- */
+document.getElementById('countingSection').innerHTML=ROLES.map(r=>
+  `<div class="cgl">${r.label}</div><div class="counting-box ${r.actors.length===2?'two':''}">${
+    r.actors.map((a,i)=>{const st=ACTOR_STYLE[ak(r.key,a)];
+      return `<div class="count-card" id="card-${r.key}-${i}"><div class="cnt-name" style="color:${st.fg}">${a}</div><div class="cnt-num" style="color:${st.fg}"><span id="cnt-${r.key}-${i}">0</span><span id="tot-${r.key}-${i}" class="cnt-of">/0</span></div><div class="cnt-label">회</div></div>`;}).join('')
+  }</div>`).join('');
+
+/* ===================================================================== */
+const showSeats=(()=>{try{return JSON.parse(localStorage.getItem(SEAT_KEY)||'{}');}catch(e){return {};}})();
+function saveSeats(){try{localStorage.setItem(SEAT_KEY,JSON.stringify(showSeats));}catch(e){}}
+let focusedId=null;
+
+function emptySel(){const o={};ROLES.forEach(r=>o[r.key]=[]);return o;}
+let sel=emptySel();
+let pinnedSel=(()=>{try{return JSON.parse(localStorage.getItem(PIN_KEY)||'null');}catch(e){return null;}})();
+if(pinnedSel){
+  const clean=emptySel();
+  ROLES.forEach(r=>{let v=pinnedSel[r.key];if(v==null)v=[];if(!Array.isArray(v))v=[v];clean[r.key]=v.filter(a=>r.actors.includes(a));});
+  pinnedSel=clean;
+}
+const isAllEmpty=s=>ROLES.every(r=>!s[r.key]||!s[r.key].length);
+const matchSel=info=>ROLES.every(r=>!sel[r.key].length||sel[r.key].includes(info[r.key]));
+function sameSel(a,b){return ROLES.every(r=>{const x=[...(a[r.key]||[])].sort(),y=[...(b[r.key]||[])].sort();return x.length===y.length&&x.every((v,i)=>v===y[i]);});}
+function selText(s){const p=[];ROLES.forEach(r=>{if((s[r.key]||[]).length)p.push(s[r.key].join('·'));});return p.join(' · ');}
+
+/* ---------- filter ---------- */
+function toggleFilter(role,actor){const arr=sel[role];const i=arr.indexOf(actor);if(i>-1)arr.splice(i,1);else arr.push(actor);applyFilter();}
+function resetFilter(){sel=emptySel();applyFilter();}
+function applyFilter(){
+  const isAll=isAllEmpty(sel);
+  document.querySelectorAll('.fb2').forEach(b=>{
+    if(b.classList.contains('btn-all')){b.classList.toggle('active',isAll);return;}
+    const r=b.dataset.role,a=b.dataset.actor;
+    b.classList.toggle('active',sel[r].includes(a));
+    b.classList.toggle('pinned',!!(pinnedSel&&(pinnedSel[r]||[]).includes(a)));
+  });
+  let visible=0;
+  document.querySelectorAll('.row[data-sid]').forEach(row=>{
+    const show=matchSel(SHOW_INFO[row.dataset.sid]);
+    row.classList.toggle('hidden',!show); if(show)visible++;
+  });
+  document.querySelectorAll('[data-noshow]').forEach(el=>el.style.display=isAll?'':'none');
+  document.getElementById('countInfo').textContent=(isAll?'전체':selText(sel))+' '+visible+'회';
+  ROLES.forEach(r=>r.actors.forEach((a,i)=>{
+    document.getElementById(`card-${r.key}-${i}`).classList.toggle('dim',sel[r.key].length>0&&!sel[r.key].includes(a));
+  }));
+  updateCounting();updateMap();renderPinBar();
+}
+
+/* ---------- pin ---------- */
+function renderPinBar(){
+  const bar=document.getElementById('pinBar');
+  let html='';
+  if(pinnedSel&&!isAllEmpty(pinnedSel)){
+    html+=`<span class="pin-status"><span class="pin-dot"></span>📌 ${selText(pinnedSel)} 고정 중</span><button class="pin-btn pin-btn-clear" onclick="clearPin()">고정 해제</button>`;
+  }
+  if(!isAllEmpty(sel)&&!(pinnedSel&&sameSel(sel,pinnedSel))){
+    html+=`<button class="pin-btn pin-btn-set" onclick="setPin()">📌 ${selText(sel)} 고정하기</button>`;
+  }
+  bar.innerHTML=html||'<span class="pin-hint">배우를 선택하고 📌 고정하면 다음 접속 때도 유지돼요</span>';
+}
+function setPin(){pinnedSel=JSON.parse(JSON.stringify(sel));try{localStorage.setItem(PIN_KEY,JSON.stringify(pinnedSel));}catch(e){}applyFilter();}
+function clearPin(){pinnedSel=null;try{localStorage.removeItem(PIN_KEY);}catch(e){}applyFilter();}
+
+/* ---------- counting ---------- */
+function updateCounting(){
+  const cnt={},tot={};let total=0,totTotal=0;
+  SHOW_LIST.forEach(s=>{
+    const info=SHOW_INFO[s.sid]; if(!matchSel(info))return;
+    const seen=(showSeats[s.sid]||[]).length>0;
+    ROLES.forEach(r=>{const k=ak(r.key,info[r.key]);tot[k]=(tot[k]||0)+1;if(seen)cnt[k]=(cnt[k]||0)+1;});
+    totTotal++; if(seen)total++;
+  });
+  ROLES.forEach(r=>r.actors.forEach((a,i)=>{
+    const k=ak(r.key,a);
+    document.getElementById(`cnt-${r.key}-${i}`).textContent=cnt[k]||0;
+    document.getElementById(`tot-${r.key}-${i}`).textContent='/'+(tot[k]||0);
+  }));
+  document.getElementById('cnt-total').textContent=total;
+  document.getElementById('tot-total').textContent='/'+totTotal;
+}
+
+/* ================= SEAT MAP (NOL 서경스퀘어 스콘 1관) ================= */
+const N=null, W='W';
+const range=(a,b)=>Array.from({length:b-a+1},(_,i)=>a+i);
+const ZONES=['A','B','C'];
+const ZONE_COLS={A:6,B:12,C:6};
+// 각 열의 칸 위치 그대로: A는 1~6번 자리, C는 4~9번 자리 기준, null=빈칸, W=휠체어석
+const SEAT_LAYOUT={'1F':{label:'1층',stage:true,rows:{}},'2F':{label:'2층',rows:{}}};
+for(let r=0;r<=13;r++){
+  SEAT_LAYOUT['1F'].rows[r]={
+    A: r===0?[N,N,N,N,N,N]: r<=5?[N,N,N,N,5,6]:[N,2,3,4,5,6],
+    B: r===0?[...range(1,11),N]:range(1,12),
+    C: r===0?[N,N,N,N,N,N]:[4,5,6,7,8,N]
+  };
+}
+SEAT_LAYOUT['2F'].rows={
+  14:{A:[N,N,N,N,W,W], B:range(1,12), C:[W,W,N,N,N,N]},
+  15:{A:[1,2,3,4,5,6], B:range(1,12), C:[4,5,6,7,8,9]},
+  16:{A:[N,2,3,4,5,6], B:range(1,12), C:[4,5,6,7,8,N]},
+  17:{A:[N,2,3,4,5,6], B:range(1,12), C:[4,5,6,7,8,N]},
+};
+const COLORS=[
+  {bg:'#b0242b',border:'#7d171d',label:'1회'},
+  {bg:'#3a72c2',border:'#204d8f',label:'2회'},
+  {bg:'#d98a2e',border:'#a4671c',label:'3회'},
+  {bg:'#7a4ec2',border:'#54338f',label:'4회'},
+  {bg:'#3ea15f',border:'#25703f',label:'5회 이상'},
+];
+const ZONE_GAP=3;
+function computeSeatSize(w){
+  let sz=12;
+  for(let i=0;i<4;i++){const lw=Math.max(9,sz*0.9);const used=24*sz+21+2*lw+4*ZONE_GAP;sz=sz*(w/used);}
+  return Math.max(8,Math.min(22,Math.round(sz*10)/10));
+}
+function buildMap(){
+  const wrap=document.getElementById('seatMapInner');wrap.innerHTML='';
+  const cw=wrap.clientWidth||(wrap.parentElement?wrap.parentElement.clientWidth:340);
+  const sz=computeSeatSize(Math.max(280,cw-8));
+  const lw=Math.max(9,Math.round(sz*0.9)),fs=Math.max(5,Math.round(sz*0.5)),lfs=Math.max(6,Math.round(sz*0.62));
+  const zoneW=c=>c*sz+(c-1);
+  const el=(cls,txt)=>{const d=document.createElement('div');d.className=cls;if(txt!=null)d.textContent=txt;return d;};
+  const label=t=>{const d=el('row-label',t);d.style.cssText=`width:${lw}px;font-size:${lfs}px;margin:0 ${ZONE_GAP}px;`;return d;};
+  Object.keys(SEAT_LAYOUT).forEach(fk=>{
+    const fl=SEAT_LAYOUT[fk];
+    const fb=el('floor-block');fb.appendChild(el('floor-title',fl.label));
+    if(fl.stage)fb.appendChild(el('stage-box-mini','STAGE'));
+    const sc=el('zone-scroll');const grid=el('seat-grid');
+    const hdr=el('seat-row');
+    ZONES.forEach((z,i)=>{if(i)hdr.appendChild(label(''));const d=el('zone-label',z);d.style.width=zoneW(ZONE_COLS[z])+'px';hdr.appendChild(d);});
+    grid.appendChild(hdr);
+    Object.keys(fl.rows).forEach(r=>{
+      const row=el('seat-row');
+      ZONES.forEach((z,i)=>{
+        if(i)row.appendChild(label(r));
+        const g=el('zone-cells');
+        fl.rows[r][z].forEach(n=>{
+          let c;
+          if(n===N){c=el('seat-gap');}
+          else if(n===W){c=el('seat-wc','♿');}
+          else{c=el('seat',n);c.id='S-'+fk+'-'+z+'-'+r+'-'+n;}
+          c.style.width=c.style.height=sz+'px';c.style.fontSize=fs+'px';
+          g.appendChild(c);
+        });
+        row.appendChild(g);
+      });
+      grid.appendChild(row);
+    });
+    sc.appendChild(grid);fb.appendChild(sc);wrap.appendChild(fb);
+  });
+}
+let _rto=null;
+window.addEventListener('resize',()=>{clearTimeout(_rto);_rto=setTimeout(()=>{buildMap();updateMap();},200);});
+
+function updateMap(){
+  document.querySelectorAll('.seat').forEach(el=>{el.className='seat';el.removeAttribute('title');});
+  const cnt={};
+  SHOW_LIST.forEach(s=>{const seats=showSeats[s.sid]||[];if(!seats.length||!matchSel(SHOW_INFO[s.sid]))return;seats.forEach(k=>cnt[k]=(cnt[k]||0)+1);});
+  Object.keys(cnt).forEach(k=>{const el=document.getElementById('S-'+k);if(el){el.classList.add('mk'+Math.min(cnt[k],5));el.title=k+' ('+cnt[k]+'회)';}});
+  const lg=document.getElementById('seatLegend');
+  const max=Math.max(0,...Object.values(cnt));
+  if(!max){lg.innerHTML='<span style="font-size:11px;color:#8a7360;">좌석을 입력하면 여기에 표시됩니다</span>';return;}
+  lg.innerHTML='';
+  for(let i=1;i<=Math.min(max,5);i++){const c=COLORS[i-1];const it=document.createElement('div');it.className='seat-legend-item';
+    it.innerHTML=`<div class="seat-legend-dot" style="background:${c.bg};border:1px solid ${c.border}"></div>${c.label}`;lg.appendChild(it);}
+}
+
+/* ---------- seat input ---------- */
+function parseSeat(val){
+  // 1F-B-3-7 형식. 층은 생략 가능 (B-3-7 → 열 번호로 층 자동 판단)
+  const m=val.trim().toUpperCase().replace(/\s+/g,'').match(/^(?:(1F|2F)-)?(A|B|C)-(\d{1,2})-(\d{1,2})$/);
+  if(!m)return null;
+  const r=parseInt(m[3]),n=parseInt(m[4]);
+  const fk=m[1]||(r>=14?'2F':'1F');
+  const row=SEAT_LAYOUT[fk]&&SEAT_LAYOUT[fk].rows[r];
+  if(!row||!row[m[2]].includes(n))return null;
+  return fk+'-'+m[2]+'-'+r+'-'+n;
+}
+function confirmFocused(){
+  if(!focusedId)return;
+  const input=document.getElementById('inp-'+focusedId);if(!input||!input.value.trim())return;
+  const key=parseSeat(input.value);
+  if(!key){input.style.borderColor='#b0242b';setTimeout(()=>input.style.borderColor='',1000);return;}
+  if(!showSeats[focusedId])showSeats[focusedId]=[];
+  if(!showSeats[focusedId].includes(key)){showSeats[focusedId].push(key);saveSeats();renderAllTags();updateMap();updateCounting();}
+  input.value='';input.style.borderColor='';
+}
+function confirmSeat(sid){focusedId=sid;confirmFocused();}
+function removeSeat(sid,key){showSeats[sid]=(showSeats[sid]||[]).filter(s=>s!==key);saveSeats();renderAllTags();updateMap();updateCounting();}
+function renderTags(sid,cnt){
+  const el=document.getElementById('tags-'+sid);if(!el)return;el.innerHTML='';
+  const input=document.getElementById('inp-'+sid);const row=input?input.parentElement:null;
+  const seats=showSeats[sid]||[];
+  if(row)row.style.display=seats.length?'none':'';
+  seats.forEach(key=>{
+    const c=COLORS[Math.min(cnt[key]||1,5)-1];
+    const t=document.createElement('span');t.className='seat-tag';t.style.background=c.bg;
+    t.innerHTML=key+' <span style="font-size:7px;opacity:0.8">×</span>';
+    t.onclick=()=>removeSeat(sid,key);el.appendChild(t);
+  });
+}
+function renderAllTags(){
+  const cnt={};Object.values(showSeats).forEach(a=>(a||[]).forEach(s=>cnt[s]=(cnt[s]||0)+1));
+  SHOW_LIST.forEach(s=>renderTags(s.sid,cnt));
+}
+document.querySelectorAll('.seat-input').forEach(inp=>{
+  inp.addEventListener('focus',()=>{focusedId=inp.id.replace('inp-','');});
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();focusedId=inp.id.replace('inp-','');confirmFocused();}});
+});
+
+/* ---------- copy ---------- */
+function copyText(text,btn){
+  const ok=()=>{if(btn){btn.textContent='✅';setTimeout(()=>btn.textContent='🔑',1500);}};
+  const fallback=()=>{try{const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');
+    ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px;';document.body.appendChild(ta);
+    ta.focus();ta.select();ta.setSelectionRange(0,text.length);const r=document.execCommand('copy');document.body.removeChild(ta);if(r){ok();return true;}}catch(e){}return false;};
+  const fail=()=>{if(!fallback()){if(btn){btn.textContent='⚠️';setTimeout(()=>btn.textContent='🔑',1500);}prompt('복사가 자동으로 안 돼요. 아래 텍스트를 직접 복사해주세요:',text);}};
+  if(navigator.clipboard&&navigator.clipboard.writeText&&window.isSecureContext)navigator.clipboard.writeText(text).then(ok).catch(fail);
+  else fail();
+}
+function copyCast(sid){
+  const s=SHOW_LIST.find(x=>x.sid===sid);if(!s)return;
+  let text=`뮤지컬 아가사\n${s.m}/${s.d} ${DOW[s.dow]} ${s.time}\n${s.cast.join(' ')}`;
+  if(s.ev.length)text+='\n'+s.ev.map(e=>e.label).join(', ');
+  copyText(text,document.querySelector(`.row[data-sid="${sid}"] .copy-btn`));
+}
+
+/* ---------- export / import ---------- */
+function exportData(){
+  const data=SHOW_LIST.map(s=>{const o={sid:s.sid,date:`${s.m}월 ${s.d}일`,day:DOW[s.dow],time:s.time};
+    ROLES.forEach((r,i)=>o[r.label]=s.cast[i]);o.seats=showSeats[s.sid]||[];return o;});
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='아가사_내좌석.json';a.click();URL.revokeObjectURL(url);
+}
+function importData(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(Array.isArray(data))data.forEach(it=>{if(it&&it.sid)showSeats[it.sid]=it.seats||[];});
+      else Object.keys(data).forEach(sid=>showSeats[sid]=data[sid]);
+      saveSeats();renderAllTags();updateMap();updateCounting();
+      alert('데이터를 불러왔어요! 🎉');
+    }catch(err){alert('파일을 읽을 수 없어요 ㅠㅠ');}
+  };
+  reader.readAsText(file);e.target.value='';
+}
+
+/* ---------- save image ---------- */
+function saveArchiveImage(){
+  const btn=document.getElementById('saveImgBtn'),target=document.getElementById('captureArea');
+  if(typeof html2canvas==='undefined'){alert('이미지 저장 기능을 불러오지 못했어요. 인터넷 연결을 확인해주세요.');return;}
+  const orig=btn.textContent;btn.disabled=true;btn.textContent='⏳ 저장 중...';
+  html2canvas(target,{backgroundColor:'#6e1a1d',scale:2,useCORS:true}).then(canvas=>{
+    const a=document.createElement('a');a.download='아가사_정산판.jpg';a.href=canvas.toDataURL('image/jpeg',0.92);a.click();
+    btn.textContent='✅ 저장 완료!';setTimeout(()=>{btn.textContent=orig;btn.disabled=false;},1500);
+  }).catch(err=>{console.error(err);alert('이미지 저장 중 오류가 발생했어요.');btn.textContent=orig;btn.disabled=false;});
+}
+
+/* ---------- init ---------- */
+buildMap();
+renderAllTags();
+if(pinnedSel&&!isAllEmpty(pinnedSel))sel=JSON.parse(JSON.stringify(pinnedSel));
+applyFilter();
+</script>
+</body>
+</html>
