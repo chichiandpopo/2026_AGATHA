@@ -78,6 +78,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);min-height:100vh;pad
 .frow{display:flex;gap:4px;flex-wrap:wrap;}
 .fb2{padding:4px 10px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;
   background:var(--bg);color:var(--fg);border:1.5px solid var(--line);transition:all 0.12s;}
+.join-note{font-size:8.5px;font-weight:500;margin-left:3px;opacity:0.75;}
 .fb2.active{background:var(--act);color:#fff;border-color:var(--act);}
 .fb2.pinned{outline:2.5px solid var(--red);outline-offset:1px;}
 .btn-all{--bg:#fff;--fg:var(--ink);--line:#cdb38a;--act:var(--red);}
@@ -124,6 +125,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);min-height:100vh;pad
 .settle-sub{text-align:center;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold-m);margin-bottom:8px;}
 .cgl{font-size:10.5px;font-weight:700;color:var(--gold);text-align:center;letter-spacing:2px;margin:8px 0 4px;}
 .counting-box{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:360px;margin:0 auto;}
+.counting-box.four{grid-template-columns:repeat(4,1fr);max-width:440px;}
 .counting-box.two{grid-template-columns:repeat(2,1fr);max-width:240px;}
 .count-card{background:var(--cream);border-radius:8px;padding:6px 3px;text-align:center;border:1px solid var(--gold-m);transition:opacity .15s,filter .15s;}
 .count-card.dim{opacity:0.35;filter:grayscale(70%);}
@@ -266,7 +268,7 @@ const TICKET_LINKS=[
 
 const ROLES=[
   {key:'agatha',    label:'아가사',   actors:['이정화','백은혜','최수진']},
-  {key:'roy',       label:'로이',     actors:['김재범','고상호','원태민']},
+  {key:'roy',       label:'로이',     actors:['김재범','고상호','원태민','윤소호']},
   {key:'raymond',   label:'레이몬드', actors:['홍나현','정지우','홍기범']},
   {key:'archibald', label:'아치볼드', actors:['정평','김대식']},
   {key:'paul',      label:'폴',       actors:['안두호','박상준']},
@@ -275,6 +277,9 @@ const ROLES=[
   {key:'nancy',     label:'낸시',     actors:['김초하','정다예']},
   {key:'harris',    label:'헤리츠',   actors:['강인대','이찬렬']},
 ];
+
+// 합류 예정 배우 표시 (스케줄이 나오면 SHOWS에 추가하고 여기서 지워주세요)
+const JOIN_NOTE={};
 
 // [MMDD, HHMM, [아가사, 로이, 레이몬드, 아치볼드, 폴, 뉴먼, 베스, 낸시, 헤리츠]]
 const SHOWS=[
@@ -339,7 +344,7 @@ document.getElementById('filters').innerHTML=
   `<div class="fgroup all"><button class="fb2 btn-all active" onclick="resetFilter()">전체 보기</button></div>`+
   ROLES.map(r=>`<div class="fgroup"><div class="fgl">${r.label}</div><div class="frow">${
     r.actors.map(a=>{const st=ACTOR_STYLE[ak(r.key,a)];
-      return `<button class="fb2" data-role="${r.key}" data-actor="${a}" style="--bg:${st.bg};--fg:${st.fg};--act:${st.act};--line:${st.line}" onclick="toggleFilter('${r.key}','${a}')">${a}</button>`;}).join('')
+      return `<button class="fb2" data-role="${r.key}" data-actor="${a}" style="--bg:${st.bg};--fg:${st.fg};--act:${st.act};--line:${st.line}" onclick="toggleFilter('${r.key}','${a}')">${a}${JOIN_NOTE[ak(r.key,a)]?`<span class="join-note">${JOIN_NOTE[ak(r.key,a)]}</span>`:''}</button>`;}).join('')
   }</div></div>`).join('');
 
 /* ---------- render: table ---------- */
@@ -381,9 +386,9 @@ document.getElementById('filters').innerHTML=
 
 /* ---------- render: counting cards ---------- */
 document.getElementById('countingSection').innerHTML=ROLES.map(r=>
-  `<div class="cgl">${r.label}</div><div class="counting-box ${r.actors.length===2?'two':''}">${
+  `<div class="cgl">${r.label}</div><div class="counting-box ${r.actors.length===2?'two':r.actors.length===4?'four':''}">${
     r.actors.map((a,i)=>{const st=ACTOR_STYLE[ak(r.key,a)];
-      return `<div class="count-card" id="card-${r.key}-${i}"><div class="cnt-name" style="color:${st.fg}">${a}</div><div class="cnt-num" style="color:${st.fg}"><span id="cnt-${r.key}-${i}">0</span><span id="tot-${r.key}-${i}" class="cnt-of">/0</span></div><div class="cnt-label">회</div></div>`;}).join('')
+      return `<div class="count-card" id="card-${r.key}-${i}"><div class="cnt-name" style="color:${st.fg}">${a}</div><div class="cnt-num" style="color:${st.fg}"><span id="cnt-${r.key}-${i}">0</span><span id="tot-${r.key}-${i}" class="cnt-of">/0</span></div><div class="cnt-label">${JOIN_NOTE[ak(r.key,a)]||'회'}</div></div>`;}).join('')
   }</div>`).join('');
 
 /* ===================================================================== */
