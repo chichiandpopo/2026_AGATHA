@@ -148,6 +148,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);min-height:100vh;pad
 .zone-scroll{overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
 .seat-grid{display:flex;flex-direction:column;gap:1px;align-items:center;width:max-content;margin:0 auto;}
 .zone-cells{display:flex;gap:1px;flex-shrink:0;}
+.foh-box{position:absolute;left:0;top:0;right:0;display:flex;align-items:center;justify-content:center;border-radius:5px;background:#8597b4;color:#fff;font-weight:700;letter-spacing:0.5px;z-index:1;}
 .seat-wc{display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:2px;background:#e3d8c4;color:#8a7360;}
 .zone-label{font-size:10px;font-weight:700;color:#7a6450;text-align:center;margin-bottom:3px;letter-spacing:1px;white-space:nowrap;flex-shrink:0;}
 .seat-row{display:flex;align-items:center;gap:1px;}
@@ -230,7 +231,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);min-height:100vh;pad
   <div class="notice">※ 상기 공연 스케줄은 배우 및 제작사의 사정에 의해 사전 공지 없이 변경될 수 있습니다.</div>
 
   <div id="captureArea">
-    <div class="settle-title">2026년 아가사 정산</div>
+    <div class="settle-title">아가사 정산</div>
     <div class="settle-sub">MY AGATHA ARCHIVE</div>
     <div id="countingSection"></div>
     <div class="cnt-total-box">
@@ -468,24 +469,27 @@ function updateCounting(){
 }
 
 /* ================= SEAT MAP (NOL 서경스퀘어 스콘 1관) ================= */
-const N=null, W='W';
+const N=null, W='W', H='H', FOH='FOH', FOH2='FOH2';
 const range=(a,b)=>Array.from({length:b-a+1},(_,i)=>a+i);
 const ZONES=['A','B','C'];
 const ZONE_COLS={A:6,B:12,C:6};
-// 각 열의 칸 위치 그대로: A는 1~6번 자리, C는 4~9번 자리 기준, null=빈칸, W=휠체어석
+// 각 열의 칸 위치 그대로: A는 1~6번 자리, C는 4~9번 자리 기준
+// null=빈칸, H=반칸, W=휠체어석, FOH=컨트롤룸
 const SEAT_LAYOUT={'1F':{label:'1층',stage:true,rows:{}},'2F':{label:'2층',rows:{}}};
 for(let r=0;r<=13;r++){
   SEAT_LAYOUT['1F'].rows[r]={
     A: r===0?[N,N,N,N,N,N]: r<=5?[N,N,N,N,5,6]:[N,2,3,4,5,6],
-    B: r===0?[...range(1,11),N]:range(1,12),
+    B: r===0?[1,2,H,3,4,5,6,7,8,H,9,10,11]:range(1,12),
     C: r===0?[N,N,N,N,N,N]:[4,5,6,7,8,N]
   };
 }
 SEAT_LAYOUT['2F'].rows={
-  14:{A:[N,N,N,N,W,W], B:range(1,12), C:[W,W,N,N,N,N]},
+  14:{A:[N,N,N,N,W,W], B:range(1,12), C:[4,5,6,7,N,N]},
   15:{A:[1,2,3,4,5,6], B:range(1,12), C:[4,5,6,7,8,9]},
   16:{A:[N,2,3,4,5,6], B:range(1,12), C:[4,5,6,7,8,N]},
   17:{A:[N,2,3,4,5,6], B:range(1,12), C:[4,5,6,7,8,N]},
+  18:{A:[1,2,3,4,5,6], B:[FOH], C:[4,5,6,7,8,9], gapBefore:true},
+  19:{A:[1,2,3,4,5,6], B:[FOH2], C:[4,5,6,7,8,9]},
 };
 const COLORS=[
   {bg:'#b0242b',border:'#7d171d',label:'1회'},
@@ -512,17 +516,25 @@ function buildMap(){
     const fl=SEAT_LAYOUT[fk];
     const fb=el('floor-block');fb.appendChild(el('floor-title',fl.label));
     if(fl.stage)fb.appendChild(el('stage-box-mini','STAGE'));
+    if(fl.after)fb.dataset.after=1;
     const sc=el('zone-scroll');const grid=el('seat-grid');
     const hdr=el('seat-row');
     ZONES.forEach((z,i)=>{if(i)hdr.appendChild(label(''));const d=el('zone-label',z);d.style.width=zoneW(ZONE_COLS[z])+'px';hdr.appendChild(d);});
     grid.appendChild(hdr);
     Object.keys(fl.rows).forEach(r=>{
       const row=el('seat-row');
+      if(fl.rows[r].gapBefore)row.style.marginTop=Math.round(sz*0.8)+'px';
       ZONES.forEach((z,i)=>{
         if(i)row.appendChild(label(r));
         const g=el('zone-cells');
         fl.rows[r][z].forEach(n=>{
           let c;
+          if(n===FOH||n===FOH2){
+            c=el('seat-gap');c.style.cssText=`width:${zoneW(12)}px;height:${sz}px;position:relative;flex-shrink:0;`;
+            if(n===FOH){const box=el('foh-box','컨트롤룸 (F.O.H)');box.style.cssText=`height:${sz*2+1}px;font-size:${Math.max(7,fs+1)}px;`;c.appendChild(box);}
+            g.appendChild(c);return;
+          }
+          if(n===H){c=el('seat-gap');c.style.cssText=`width:${(sz-1)/2}px;height:${sz}px;flex-shrink:0;`;g.appendChild(c);return;}
           if(n===N){c=el('seat-gap');}
           else if(n===W){c=el('seat-wc','♿');}
           else{c=el('seat',n);c.id='S-'+fk+'-'+z+'-'+r+'-'+n;}
