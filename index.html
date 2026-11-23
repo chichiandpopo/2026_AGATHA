@@ -127,6 +127,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);min-height:100vh;pad
 .counting-box{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:360px;margin:0 auto;}
 .counting-box.four{grid-template-columns:repeat(4,1fr);max-width:440px;}
 .counting-box.two{grid-template-columns:repeat(2,1fr);max-width:240px;}
+.counting-box.one{grid-template-columns:1fr;max-width:150px;}
 .count-card{background:var(--cream);border-radius:8px;padding:6px 3px;text-align:center;border:1px solid var(--gold-m);transition:opacity .15s,filter .15s;}
 .count-card.dim{opacity:0.35;filter:grayscale(70%);}
 .cnt-name{font-size:11px;font-weight:700;margin-bottom:2px;}
@@ -388,7 +389,7 @@ document.getElementById('filters').innerHTML=
 
 /* ---------- render: counting cards ---------- */
 document.getElementById('countingSection').innerHTML=ROLES.map(r=>
-  `<div class="cgl">${r.label}</div><div class="counting-box ${r.actors.length===2?'two':r.actors.length===4?'four':''}">${
+  `<div class="cgl">${r.label}</div><div class="counting-box ${r.actors.length===2?'two':r.actors.length===4?'four':''}" id="box-${r.key}">${
     r.actors.map((a,i)=>{const st=ACTOR_STYLE[ak(r.key,a)];
       return `<div class="count-card" id="card-${r.key}-${i}"><div class="cnt-name" style="color:${st.fg}">${a}</div><div class="cnt-num" style="color:${st.fg}"><span id="cnt-${r.key}-${i}">0</span><span id="tot-${r.key}-${i}" class="cnt-of">/0</span></div><div class="cnt-label">${JOIN_NOTE[ak(r.key,a)]||'회'}</div></div>`;}).join('')
   }</div>`).join('');
@@ -406,6 +407,8 @@ if(pinnedSel){
   ROLES.forEach(r=>{let v=pinnedSel[r.key];if(v==null)v=[];if(!Array.isArray(v))v=[v];clean[r.key]=v.filter(a=>r.actors.includes(a));});
   pinnedSel=clean;
 }
+// 같은 역에서 2명 이상 선택한 역이 하나라도 있으면 정산은 전체보기와 똑같이
+const countAsAll=()=>ROLES.some(r=>sel[r.key].length>=2);
 const isAllEmpty=s=>ROLES.every(r=>!s[r.key]||!s[r.key].length);
 const matchSel=info=>ROLES.every(r=>!sel[r.key].length||sel[r.key].includes(info[r.key]));
 function sameSel(a,b){return ROLES.every(r=>{const x=[...(a[r.key]||[])].sort(),y=[...(b[r.key]||[])].sort();return x.length===y.length&&x.every((v,i)=>v===y[i]);});}
@@ -430,8 +433,11 @@ function applyFilter(){
   document.querySelectorAll('[data-noshow]').forEach(el=>el.style.display=isAll?'':'none');
   document.getElementById('countInfo').textContent=(isAll?'전체':selText(sel))+' '+visible+'회';
   ROLES.forEach(r=>r.actors.forEach((a,i)=>{
-    document.getElementById(`card-${r.key}-${i}`).classList.toggle('dim',sel[r.key].length>0&&!sel[r.key].includes(a));
+    // 같은 역 1명만 선택 → 그 배우 카드만 보이기 / 0명·2명 이상 → 전체 그대로
+    const only=!countAsAll()&&sel[r.key].length===1;
+    document.getElementById(`card-${r.key}-${i}`).style.display=(only&&sel[r.key][0]!==a)?'none':'';
   }));
+  ROLES.forEach(r=>document.getElementById('box-'+r.key).classList.toggle('one',!countAsAll()&&sel[r.key].length===1));
   updateCounting();updateMap();renderPinBar();
 }
 
@@ -454,10 +460,12 @@ function clearPin(){pinnedSel=null;try{localStorage.removeItem(PIN_KEY);}catch(e
 function updateCounting(){
   const cnt={},tot={};let total=0,totTotal=0;
   SHOW_LIST.forEach(s=>{
-    const info=SHOW_INFO[s.sid]; if(!matchSel(info))return;
+    const info=SHOW_INFO[s.sid]; // 필터와 상관없이 전체 기준으로 카운팅
     const seen=(showSeats[s.sid]||[]).length>0;
     ROLES.forEach(r=>{const k=ak(r.key,info[r.key]);tot[k]=(tot[k]||0)+1;if(seen)cnt[k]=(cnt[k]||0)+1;});
-    totTotal++; if(seen)total++;
+    // 합계: 1명만 선택한 역은 그 배우 회차만, 2명 이상 선택한 역은 전체로 계산
+    const inTotal=countAsAll()||ROLES.every(r=>sel[r.key].length!==1||sel[r.key][0]===info[r.key]);
+    if(inTotal){totTotal++; if(seen)total++;}
   });
   ROLES.forEach(r=>r.actors.forEach((a,i)=>{
     const k=ak(r.key,a);
