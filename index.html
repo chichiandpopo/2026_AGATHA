@@ -191,6 +191,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);min-height:100vh;pad
   .cnt-total-card .cnt-num{font-size:34px;}
 }
 </style>
+<link rel="stylesheet" href="notices/archive.css">
 </head>
 <body>
 <div class="page">
@@ -219,9 +220,11 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);min-height:100vh;pad
     <div class="info-row">
       <a href="https://x.com/ninestory9?s=20" target="_blank" rel="noopener" class="info-btn">𝕏 공식 트위터</a>
       <a href="https://x.com/ninestory9/status/2117512639974977657" target="_blank" rel="noopener" class="info-btn">🎁 재관람 혜택</a>
-      <a href="https://claude.ai/artifact/9jwX8pGLLbBjrgLus5ruSq" target="_blank" rel="noopener" class="info-btn">📢 공지 아카이브</a>
     </div>
   </header>
+<nav class="np-tabs np-root" id="np-tabs" data-np="agatha" aria-label="보기 선택"></nav>
+<div id="np" class="np-root np-pad" data-np="agatha" data-account="ninestory9" hidden></div>
+<div class="np-main">
 
   <div class="label-plate">★ CASTING SCHEDULE ★<small>출연 일정</small></div>
 
@@ -258,6 +261,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);min-height:100vh;pad
     <a href="https://chichiandpopo.github.io/stage_archive/" target="_blank" class="ghost-btn">🎭 관극 아카이브</a>
     <button id="saveImgBtn" class="ghost-btn" onclick="saveArchiveImage()">📸 정산판 저장</button>
   </div>
+</div><!-- /np-main -->
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -672,5 +676,6 @@ renderAllTags();
 if(pinnedSel&&!isAllEmpty(pinnedSel))sel=JSON.parse(JSON.stringify(pinnedSel));
 applyFilter();
 </script>
+<script src="notices/archive.js" defer></script>
 </body>
 </html>
